@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20130921225357) do
+ActiveRecord::Schema.define(version: 20130922001105) do
 
   create_table "resource_column_values", force: true do |t|
     t.integer  "resource_column_id"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(version: 20130921225357) do
     t.datetime "csv_updated_at"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "slug"
   end
 
   create_table "services", force: true do |t|

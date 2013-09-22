@@ -3,6 +3,12 @@ class Resource < ActiveRecord::Base
   has_many :resource_columns
   has_attached_file :csv, content_type: { content_type: 'text/csv' }
 
+  validates :name, presence: true
+
+  before_create do
+    assign_default_slug if self.slug.nil?
+  end
+
   after_save do
     if csv_file_name_changed? && csv_file_name_was.nil?
       require 'csv'
@@ -18,5 +24,18 @@ class Resource < ActiveRecord::Base
         end
       end
     end
+  end
+
+  private
+
+  def assign_default_slug
+    slug = (
+      if csv?
+        File.basename(csv.path, '.csv')
+      else
+         name
+      end
+    ).underscore.gsub(' ', '')
+    assign_attributes(slug: slug)
   end
 end
