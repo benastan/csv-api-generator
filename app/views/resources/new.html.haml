@@ -1,3 +1,18 @@
+%h1 Your APIs
+
+%table
+  %tr
+    %th Resource Name
+    %th Base URL
+  - current_user.resources.select(&:persisted?).each do |resource|
+    %tr
+      %td= resource.name
+      %td= link_to resource_records_path(slug: resource.slug, format: :json), resource_records_path(slug: resource.slug, format: :json)
+
+%h2 Create a New API
+
+%h5 Give it a name and upload a CSV file.
+
 = simple_form_for @resource, url: root_url do |f|
   = f.input :name
   = f.input :csv

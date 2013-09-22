@@ -8,9 +8,7 @@ class Resource < ActiveRecord::Base
   validates :name, presence: true
 
   def records
-    columns.collect(&:values).flatten.group_by do|row|
-      row[:index]
-    end.values.collect do |ary|
+    columns.collect(&:values).flatten.group_by { |row| row[:index] }.values.collect do |ary|
       row = ary.collect(&:attributes).reduce(&:deep_merge)
       row.delete('id')
       row['id'] = row.delete('_id') if row['_id']
@@ -20,22 +18,8 @@ class Resource < ActiveRecord::Base
     end
   end
 
-  def where(options = nil, value = nil)
-    options ||= {}
-    if String === options
-      options.tap do |key|
-        options = {}
-        options[key] = value
-      end
-    end
-  end
-
-  def columns_names
-    columns.select('name').collect(&:name)
-  end
-
   before_create do
-    assign_default_slug if self.slug.nil?
+    assign_default_slug if slug.nil?
   end
 
   after_save do
