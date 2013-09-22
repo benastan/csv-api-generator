@@ -2,6 +2,7 @@ require 'spec_helper'
 
 describe Resource do
   it { should belong_to :service }
+  it { should belong_to :user }
   it { should have_many :columns }
   let(:resource) { FactoryGirl.build(:resource) }
   let(:csv) { File.new(File.join(Rails.root, 'spec', 'support', 'csv', 'users.csv')) }

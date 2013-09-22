@@ -1,13 +1,16 @@
 class ResourcesController < ApplicationController
+  before_action only: [ :new, :create ] do
+    @resource = current_user.resources.new(resource_params)
+  end
+  authorize_resource
   respond_to :html
 
-  def new
-    @resource = Resource.new
+  def create
+    @resource.save
+    redirect_to @resource
   end
 
-  def create
-    csv = params.require(:resource).permit(:name, :csv)
-    @resource = Resource.create(csv)
-    redirect_to @resource
+  def resource_params
+    params.require(:resource).permit(:name, :csv) if params[:resource]
   end
 end

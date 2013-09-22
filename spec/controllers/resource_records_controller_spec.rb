@@ -1,7 +1,9 @@
 require 'spec_helper'
 
 describe ResourceRecordsController do
-  let(:resource) { FactoryGirl.build(:resource) }
+  let(:user) { FactoryGirl.create(:user) }
+  before { sign_in user }
+  let(:resource) { FactoryGirl.build(:resource, user_id: user.id) }
   let(:csv) { File.new(File.join(Rails.root, 'spec', 'support', 'csv', 'users.csv')) }
   before { resource.update_attributes(csv: csv) }
   let(:first_record) { {"name"=>"Ben", "birthday"=>"3/30/1988", "id"=>"1"} }

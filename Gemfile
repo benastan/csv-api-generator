@@ -1,6 +1,8 @@
 source 'https://rubygems.org'
 
 gem 'coffee-rails', '~> 4.0.0'
+gem 'cancan'
+gem 'devise'
 gem 'factory_girl_rails'
 gem 'inherited_resources'
 gem 'jbuilder', '~> 1.2'

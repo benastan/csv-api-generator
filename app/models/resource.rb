@@ -1,5 +1,6 @@
 class Resource < ActiveRecord::Base
   belongs_to :service
+  belongs_to :user
   has_many :columns, class_name: :ResourceColumn
   has_many :rows, through: :columns
   has_attached_file :csv, content_type: { content_type: 'text/csv' }
